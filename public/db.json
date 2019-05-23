@@ -1,0 +1,10 @@
+{
+  "Customers": [
+    {
+      "firstname": "Rohit",
+      "lastname": "grover",
+      "email": "adithyasmartdata@gmail.com",
+      "id": 1
+    }
+  ]
+}

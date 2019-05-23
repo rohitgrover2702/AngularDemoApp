@@ -22,9 +22,13 @@ export class DemoService {
       catchError(this.handleError)
     );
   }
-
   public login(customer: Customer): Observable<Customer[]> {
     return this.http.get<Customer[]>('http://localhost:3000/Customers?firstname=' + customer.firstname + '').pipe(
+      catchError(this.handleError)
+    );
+  }
+  public deleteCustomer(customer: Customer) {
+    return this.http.delete<Customer[]>('http://localhost:3000/Customers/' + customer.id + '').pipe(
       catchError(this.handleError)
     );
   }

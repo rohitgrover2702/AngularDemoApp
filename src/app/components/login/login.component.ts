@@ -12,6 +12,20 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   customer: Customer = {};
   loginForm: FormGroup;
+  formErrors = {
+    'email': '',
+    'password': ''
+  };
+  validationMessages = {
+    'email': {
+      'required': 'Email is required.',
+      'email': 'Email not in valid format.'
+    },
+    'password': {
+      'required': 'Password is required.',
+      'minlength': 'Password should be minimum of 6 characters.'
+    },
+  };
   constructor(private fb: FormBuilder, private demoservice: DemoService,
     private router: Router) { }
 
@@ -21,26 +35,42 @@ export class LoginComponent implements OnInit {
 
   createForm() {
     this.loginForm = this.fb.group({
-      firstname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
-      password: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(12)]],
     });
+    this.loginForm.valueChanges
+      .subscribe(data => this.onValueChanged(data));
+  }
+  onValueChanged(data?: any) {
+    if (!this.loginForm) { return; }
+    const form = this.loginForm;
+    for (const field in this.formErrors) {
+      if (this.formErrors.hasOwnProperty(field)) {
+        // clear previous error message (if any)
+        this.formErrors[field] = '';
+        const control = form.get(field);
+        if (control && control.dirty && !control.valid) {
+          const messages = this.validationMessages[field];
+          for (const key in control.errors) {
+            if (control.errors.hasOwnProperty(key)) {
+              this.formErrors[field] += messages[key] + ' ';
+            }
+          }
+        }
+      }
+    }
   }
   onSubmit() {
-    debugger;
     this.customer = this.loginForm.value;
     this.demoservice.login(this.customer).subscribe(res => {
-      console.log(res);
-      res[0].roleId = '1';
       localStorage.setItem('userDetail', JSON.stringify(res));
       this.loginForm.reset({
-        firstname: '',
-        lastname: '',
         email: '',
+        password: ''
       });
       if (res) {
         this.router.navigate(['/customer']);
       }
     }, errmess => console.log(errmess));
-
   }
 }

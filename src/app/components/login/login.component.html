@@ -1,15 +1,21 @@
-<div class="row">
-  <form [formGroup]="loginForm" novalidate #fform="ngForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <input type="text" appHiglight class="form-control" formControlName="firstname" id="firstname"
-        placeholder="User Name">
-      <!-- <small *ngIf="formErrors.firstname">{{formErrors.username}}</small> -->
+<div class="middle">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 col-md-12 col-sm-9 col-xs-8">
+        <form [formGroup]="loginForm" novalidate #fform="ngForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <input type="text" appHiglight class="form-control" formControlName="email" id="email"
+              placeholder="Email">              
+            <small *ngIf="formErrors.email">{{formErrors.email}}</small>
+          </div>
+          <div class="form-group">
+            <input type="password" appHiglight class="form-control" formControlName="password" id="password"
+              placeholder="Password">
+            <small *ngIf="formErrors.password">{{formErrors.password}}</small>
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Submit</button>
+        </form>
+      </div>
     </div>
-    <div class="form-group">
-      <input type="text" appHiglight class="form-control" formControlName="password" id="lastname"
-        placeholder="Last Name">
-      <!-- <small *ngIf="formErrors.lastname">{{formErrors.password}}</small> -->
-    </div>
-    <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Submit</button>
-  </form>
+  </div>
 </div>

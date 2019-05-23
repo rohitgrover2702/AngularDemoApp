@@ -15,17 +15,24 @@ export class CustomerDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private demoservice: DemoService) { }
   ngOnChanges(): void {
-   this.customers.push(this.customer);
+    this.customers.push(this.customer);
   }
   ngOnInit() {
     this.getCustomers();
   }
 
   getCustomers() {
-   this.subscription =  this.demoservice.getCustomers().subscribe(res => {
+    this.subscription = this.demoservice.getCustomers().subscribe(res => {
       this.customers = res;
     }, err => {
       console.log(err);
+    });
+  }
+
+  deleteCustomer(data: Customer) {
+    debugger;
+    this.subscription = this.demoservice.deleteCustomer(data).subscribe(res => {
+      this.getCustomers();
     });
   }
   ngOnDestroy(): void {
