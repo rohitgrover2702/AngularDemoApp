@@ -23,7 +23,7 @@ export class DemoService {
     );
   }
   public login(customer: Customer): Observable<Customer[]> {
-    return this.http.get<Customer[]>('http://localhost:3000/Customers?firstname=' + customer.firstname + '').pipe(
+    return this.http.get<Customer[]>('http://localhost:3000/Customers?email=' + customer.email + '').pipe(
       catchError(this.handleError)
     );
   }

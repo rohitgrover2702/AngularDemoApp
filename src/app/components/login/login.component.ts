@@ -63,13 +63,16 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.customer = this.loginForm.value;
     this.demoservice.login(this.customer).subscribe(res => {
-      localStorage.setItem('userDetail', JSON.stringify(res));
-      this.loginForm.reset({
-        email: '',
-        password: ''
-      });
-      if (res) {
+      if (res.length > 0) {
+        res[0].roleId = '1';
+        localStorage.setItem('userDetail', JSON.stringify(res));
+        this.loginForm.reset({
+          email: '',
+          password: ''
+        });
         this.router.navigate(['/customer']);
+      } else {
+        alert('Invalid user!');
       }
     }, errmess => console.log(errmess));
   }
