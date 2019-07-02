@@ -30,7 +30,6 @@ export class CustomerDetailsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   deleteCustomer(data: Customer) {
-    debugger;
     this.subscription = this.demoservice.deleteCustomer(data).subscribe(res => {
       this.getCustomers();
     });
